@@ -40,11 +40,15 @@ public class ChessMatch {
         return new ChessPiece(board, Color.WHITE);
     }
 
+    public void placeNewPiece(char column, int row, ChessPiece piece){
+        board.placePiece(piece, new ChessPosition(column, row).toPosition());
+    }
+
     private void initialSetup(){
         //PLace pawns
-        for(int i=0; i<8; i++){
-            board.placePiece(new Pawn(board, Color.WHITE), new Position(1, i));
-            board.placePiece(new Pawn(board, Color.WHITE), new Position(6, i));
+        for(char i='a'; i<='h'; i++){
+            placeNewPiece(i, 7, new Pawn(board, Color.BLACK));
+            placeNewPiece(i, 2, new Pawn(board, Color.WHITE));
         }
     }
 }

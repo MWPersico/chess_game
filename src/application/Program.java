@@ -5,6 +5,8 @@ import chess.ChessMatch;
 public class Program {
     public static void main(String[] args) {
         ChessMatch chessMatch = new ChessMatch();
+        UI.clearScreen();
         UI.printBoard(chessMatch.getPieces());
+        System.out.println();
     }
 }
