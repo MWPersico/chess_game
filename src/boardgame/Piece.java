@@ -18,6 +18,11 @@ public class Piece {
     }
 
     public boolean isThereAnyPossibleMove(){
+        for(boolean[] row : possibleMoves()){
+            for(boolean move : row){
+                if(move)return true;
+            }
+        }
         return false;
     }
 

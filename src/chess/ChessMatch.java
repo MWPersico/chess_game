@@ -1,6 +1,8 @@
 package chess;
 
 import boardgame.Board;
+import boardgame.Position;
+import chess.pieces.Pawn;
 
 public class ChessMatch {
     private int turn;
@@ -13,6 +15,7 @@ public class ChessMatch {
 
     public ChessMatch(){
         this.board = new Board(8,8);
+        initialSetup();
     }
 
     public ChessPiece[][] getPieces(){
@@ -35,5 +38,12 @@ public class ChessMatch {
 
     public ChessPiece replacePromotedPiece(String type){
         return new ChessPiece(board, Color.WHITE);
-    } 
+    }
+
+    private void initialSetup(){
+        //PLace pawns
+        for(int i=0; i<8; i++){
+            board.placePiece(new Pawn(board, Color.WHITE), new Position(6, i));
+        }
+    }
 }
