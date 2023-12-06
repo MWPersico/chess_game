@@ -22,7 +22,7 @@ public class ChessMatch {
         ChessPiece[][] pieces = new ChessPiece[board.getRows()][board.getColumns()];
         for(int i=0; i<pieces.length; i++){
             for(int j=0; j<pieces[i].length;j++){
-                pieces[i][j] = (ChessPiece)board.piece(i, j);
+                pieces[i][j] = (ChessPiece)board.getPiece(i, j);
             }
         }
         return pieces;
@@ -43,6 +43,7 @@ public class ChessMatch {
     private void initialSetup(){
         //PLace pawns
         for(int i=0; i<8; i++){
+            board.placePiece(new Pawn(board, Color.WHITE), new Position(1, i));
             board.placePiece(new Pawn(board, Color.WHITE), new Position(6, i));
         }
     }
