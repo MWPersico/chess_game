@@ -33,9 +33,10 @@ public class Board {
     }
 
     public Piece removePiece(Position position){
-        if(!thereIsAPiece(position)){
+        if(!positionExists(position)){
             throw new BoardException(String.format("Error removing pieces: There is not a piece on position %s.", position));
         }
+        if(getPiece(position) == null) return null;
         Piece piece = getPiece(position);
         piece.position = null;
         pieces[position.getRow()][position.getColumn()] = null;

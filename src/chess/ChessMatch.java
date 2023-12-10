@@ -1,6 +1,7 @@
 package chess;
 
 import boardgame.Board;
+import boardgame.Piece;
 import boardgame.Position;
 import chess.pieces.Bishop;
 import chess.pieces.King;
@@ -38,7 +39,20 @@ public class ChessMatch {
     }
 
     public ChessPiece performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition){
-        return new ChessPiece(board, Color.BLACK);//
+        Position source = sourcePosition.toPosition();
+        Position target = targetPosition.toPosition();
+        if(board.thereIsAPiece(source)){
+            return (ChessPiece) makeMove(source, target);
+        }
+        throw new ChessException(String.format("Error performing move: There is no piece at %s.", source));
+    }
+
+    public Piece makeMove(Position source, Position target){
+        // Realiza o movimento no tabuleiro e retorna a peça que foi atacada
+        Piece sourcePiece = board.removePiece(source);
+        Piece capturedPiece = board.removePiece(target);
+        board.placePiece((ChessPiece)sourcePiece, target);
+        return capturedPiece;
     }
 
     public ChessPiece replacePromotedPiece(String type){
@@ -81,7 +95,5 @@ public class ChessMatch {
         placeNewPiece('c', 8, new Bishop(board, Color.BLACK));
         placeNewPiece('f', 1, new Bishop(board, Color.WHITE));
         placeNewPiece('f', 8, new Bishop(board, Color.BLACK));
-
-        
     }
 }
