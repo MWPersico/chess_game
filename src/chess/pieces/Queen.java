@@ -9,6 +9,11 @@ public class Queen extends ChessPiece{
     public Queen(Board board, Color color) {
         super(board, color);
     }
+
+    @Override
+    public boolean[][] possibleMoves(){
+        return new boolean[1][1];//
+    }
  
     @Override
     public String toString(){return "Q";}

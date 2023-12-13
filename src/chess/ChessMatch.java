@@ -34,17 +34,29 @@ public class ChessMatch {
         return pieces;
     }
 
-    public boolean[][] possibleMoves(ChessPosition sourcePosition){
-        return new boolean[1][1];//
-    }
-
     public ChessPiece performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition){
         Position source = sourcePosition.toPosition();
         Position target = targetPosition.toPosition();
-        if(board.thereIsAPiece(source)){
-            return (ChessPiece) makeMove(source, target);
+        validateSourcePosition(source);
+        validateTargetPosition(source, target);
+        return (ChessPiece) makeMove(source, target);
+    }
+
+    public void validateSourcePosition(Position sourcePosition){
+        if(!board.thereIsAPiece(sourcePosition)){
+            throw new ChessException(String.format("Error performing move: There is no piece at %s.", ChessPosition.fromPosition(sourcePosition)));
         }
-        throw new ChessException(String.format("Error performing move: There is no piece at %s.", source));
+        if(!board.getPiece(sourcePosition).isThereAnyPossibleMove()){
+            throw new ChessException(String.format("Error performing move: There is no possible moves for the piece at %s.", ChessPosition.fromPosition(sourcePosition)));
+        }
+    }
+
+    public void validateTargetPosition(Position sourcePosition, Position targetPosition){
+        ChessPiece piece = (ChessPiece) board.getPiece(sourcePosition);
+        boolean[][] possibleMoves = piece.possibleMoves();
+        if(!possibleMoves[targetPosition.getRow()][targetPosition.getColumn()]){
+            throw new ChessException(String.format("Error performing move: Invalid move!"));
+        }
     }
 
     public Piece makeMove(Position source, Position target){
@@ -56,7 +68,7 @@ public class ChessMatch {
     }
 
     public ChessPiece replacePromotedPiece(String type){
-        return new ChessPiece(board, Color.WHITE);
+        return new Bishop(board, Color.WHITE);//
     }
 
     public void placeNewPiece(char column, int row, ChessPiece piece){
