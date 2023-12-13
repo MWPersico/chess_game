@@ -14,6 +14,11 @@ public class Pawn extends ChessPiece{
     @Override
     public boolean[][] possibleMoves(){
         boolean[][] moves = new boolean[getBoard().getRows()][getBoard().getColumns()];
+        for(int i=0; i<moves.length; i++){
+            for(int j=0; j<moves[i].length; j++){
+                moves[i][j] = true;
+            }
+        }
         return moves;
     }
  

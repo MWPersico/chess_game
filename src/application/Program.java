@@ -22,7 +22,11 @@ public class Program {
                 if(input.toLowerCase().charAt(0) == 's'){
                     System.out.print("Posição para mover: ");
                     ChessPosition source = UI.readChessPosition(sc);
-                    System.out.print("Posição de destino: ");
+
+                    UI.clearScreen();
+                    UI.printBoard(chessMatch.getPieces(), chessMatch.possibleMoves(source));
+
+                    System.out.print("\nPosição de destino: ");
                     ChessPosition target = UI.readChessPosition(sc);
                     ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
                     if(capturedPiece != null)System.out.printf("\nPeça em %s capturada!\n", target);
@@ -37,7 +41,7 @@ public class Program {
                 UI.delay(2);
             }catch(ChessException ex){
                 System.out.print(ex.getMessage());
-                UI.delay(4);
+                UI.delay(5);
             }
             
         }
