@@ -21,6 +21,8 @@ public class ChessMatch {
 
     public ChessMatch() {
         this.board = new Board(8, 8);
+        turn = 1;
+        currentPlayer = Color.WHITE;
         initialSetup();
     }
 
@@ -39,10 +41,15 @@ public class ChessMatch {
         Position target = targetPosition.toPosition();
         validateSourcePosition(source);
         validateTargetPosition(source, target);
+        nextTurn();
         return (ChessPiece) makeMove(source, target);
     }
 
     public void validateSourcePosition(Position sourcePosition) {
+        if(((ChessPiece)board.getPiece(sourcePosition)).getColor() != currentPlayer){
+            throw new ChessException(String.format("Game error: It's time for %s to play!.",
+                    currentPlayer));
+        }
         if (!board.thereIsAPiece(sourcePosition)) {
             throw new ChessException(String.format("Error performing move: There is no piece at %s.",
                     ChessPosition.fromPosition(sourcePosition)));
@@ -52,6 +59,11 @@ public class ChessMatch {
                     String.format("Error performing move: There is no possible moves for the piece at %s.",
                             ChessPosition.fromPosition(sourcePosition)));
         }
+    }
+
+    private void nextTurn(){
+        turn++;
+        currentPlayer = currentPlayer == Color.WHITE ? Color.BLACK : Color.WHITE;
     }
 
     public boolean[][] possibleMoves(ChessPosition position) {
@@ -115,5 +127,13 @@ public class ChessMatch {
         placeNewPiece('c', 8, new Bishop(board, Color.BLACK));
         placeNewPiece('f', 1, new Bishop(board, Color.WHITE));
         placeNewPiece('f', 8, new Bishop(board, Color.BLACK));
+    }
+
+    public int getTurn() {
+        return turn;
+    }
+
+    public Color getCurrentPlayer() {
+        return currentPlayer;
     }
 }
