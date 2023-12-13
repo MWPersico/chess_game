@@ -13,7 +13,7 @@ public class Rook extends ChessPiece {
 
     @Override
     public boolean[][] possibleMoves() {
-        boolean[][] moves = new boolean[getBoard().getRows()][getBoard().getColumns()];
+        boolean[][] possibleMoves = new boolean[getBoard().getRows()][getBoard().getColumns()];
         // Reference position
         Position p = new Position(0, 0);
 
@@ -23,24 +23,24 @@ public class Rook extends ChessPiece {
         p.setValues(position.getRow() - 1, position.getColumn());
         // Enquanto a posição existir e não estiver vaga
         while (getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
-            moves[p.getRow()][p.getColumn()] = true;
+            possibleMoves[p.getRow()][p.getColumn()] = true;
             p.setRow(p.getRow() - 1);
         }
         // Verifica se há uma peça inimiga na extremidade
         if (getBoard().positionExists(p) && isThereOpponentPiece(p)) {
-            moves[p.getRow()][p.getColumn()] = true;
+            possibleMoves[p.getRow()][p.getColumn()] = true;
         }
 
         // Position Below
         p.setValues(position.getRow() + 1, position.getColumn());
         // Enquanto a posição existir e não estiver vaga
         while (getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
-            moves[p.getRow()][p.getColumn()] = true;
+            possibleMoves[p.getRow()][p.getColumn()] = true;
             p.setRow(p.getRow() + 1);
         }
         // Verifica se há uma peça inimiga na extremidade
         if (getBoard().positionExists(p) && isThereOpponentPiece(p)) {
-            moves[p.getRow()][p.getColumn()] = true;
+            possibleMoves[p.getRow()][p.getColumn()] = true;
         }
 
         // Verifica posições horizontalmente
@@ -49,26 +49,26 @@ public class Rook extends ChessPiece {
         p.setValues(position.getRow(), position.getColumn() - 1);
         // Enquanto a posição existir e não estiver vaga
         while (getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
-            moves[p.getRow()][p.getColumn()] = true;
+            possibleMoves[p.getRow()][p.getColumn()] = true;
             p.setColumn(p.getColumn() - 1);
         }
         // Verifica se há uma peça inimiga na extremidade
         if (getBoard().positionExists(p) && isThereOpponentPiece(p)) {
-            moves[p.getRow()][p.getColumn()] = true;
+            possibleMoves[p.getRow()][p.getColumn()] = true;
         }
 
         // Right Position
         p.setValues(position.getRow(), position.getColumn() + 1);
         // Enquanto a posição existir e não estiver vaga
         while (getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
-            moves[p.getRow()][p.getColumn()] = true;
+            possibleMoves[p.getRow()][p.getColumn()] = true;
             p.setColumn(p.getColumn() + 1);
         }
         // Verifica se há uma peça inimiga na extremidade
         if (getBoard().positionExists(p) && isThereOpponentPiece(p)) {
-            moves[p.getRow()][p.getColumn()] = true;
+            possibleMoves[p.getRow()][p.getColumn()] = true;
         }
-        return moves;
+        return possibleMoves;
     }
 
     @Override
