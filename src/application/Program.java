@@ -23,6 +23,7 @@ public class Program {
                 ChessPosition source = UI.readChessPosition(sc);
 
                 UI.clearScreen();
+                System.out.println();
                 UI.printBoard(chessMatch.getPieces(), chessMatch.possibleMoves(source));
 
                 System.out.print("Posição de destino: ");
@@ -31,6 +32,12 @@ public class Program {
                 ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
                 if (capturedPiece != null){
                     capturedPieces.add(capturedPiece);
+                }
+
+                if(chessMatch.getPromoted() != null){
+                    System.out.print("\nEnter piece for promotion (Q/B/N/R): ");
+                    char type = sc.next().charAt(0);
+                    chessMatch.replacePromotedPiece(type);
                 }
             } catch (InputMismatchException ex) {
                 System.out.print(ex.getMessage());

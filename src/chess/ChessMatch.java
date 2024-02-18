@@ -1,5 +1,6 @@
 package chess;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import boardgame.Board;
@@ -56,6 +57,12 @@ public class ChessMatch {
         }
 
         ChessPiece movedPiece = (ChessPiece) board.getPiece(target);
+
+        // Special Move: Promotion
+        promoted = null;
+        if((target.getRow() == 0 || target.getRow() == 7) && movedPiece instanceof Pawn){
+            promoted = movedPiece;
+        }
 
         check = testCheck(opponent(currentPlayer)) ? true : false;
 
@@ -198,8 +205,29 @@ public class ChessMatch {
 
     };
 
-    public ChessPiece replacePromotedPiece(String type) {
-        return new Bishop(board, Color.WHITE);// teste
+    public ChessPiece replacePromotedPiece(char type) {
+        if(promoted == null){
+            throw new IllegalStateException("There is no piece to be promoted!!");
+        }
+
+        ChessPiece newPiece;
+        
+        switch (type) {
+            case 'Q': newPiece = new Queen(board, promoted.getColor());break;
+            case 'B': newPiece = new Bishop(board, promoted.getColor());break;  
+            case 'N': newPiece = new Knight(board, promoted.getColor());break;
+            case 'R': newPiece = new Rook(board, promoted.getColor());break;
+            default: throw new InvalidParameterException("Illegal type for promotion");
+        }
+        Position promotedPosition = promoted.getChessPosition().toPosition();
+
+        board.removePiece(promotedPosition);
+        piecesOnTheBoard.remove(promoted);
+
+        board.placePiece(newPiece, promotedPosition);
+        piecesOnTheBoard.add(newPiece);
+
+        return newPiece;
     }
 
     public void placeNewPiece(char column, int row, ChessPiece piece) {
@@ -279,10 +307,6 @@ public class ChessMatch {
         placeNewPiece('c', 8, new Bishop(board, Color.BLACK));
         placeNewPiece('f', 1, new Bishop(board, Color.WHITE));
         placeNewPiece('f', 8, new Bishop(board, Color.BLACK));
-
-
-        // Reservado para tabuleiros de teste: TODO REMOVER
-
     }
 
     public int getTurn() {
@@ -299,6 +323,10 @@ public class ChessMatch {
 
     public ChessPiece getEnPassantVulnerable(){
         return enPassantVulnerable;
+    }
+
+    public ChessPiece getPromoted(){
+        return promoted;
     }
 
     public Color getCurrentPlayer() {
