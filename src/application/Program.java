@@ -36,7 +36,7 @@ public class Program {
 
                 if(chessMatch.getPromoted() != null){
                     System.out.print("\nEnter piece for promotion (Q/B/N/R): ");
-                    char type = sc.next().charAt(0);
+                    char type = sc.next().toUpperCase().charAt(0);
                     chessMatch.replacePromotedPiece(type);
                 }
             } catch (InputMismatchException ex) {

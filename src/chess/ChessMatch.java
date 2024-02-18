@@ -217,7 +217,7 @@ public class ChessMatch {
             case 'B': newPiece = new Bishop(board, promoted.getColor());break;  
             case 'N': newPiece = new Knight(board, promoted.getColor());break;
             case 'R': newPiece = new Rook(board, promoted.getColor());break;
-            default: throw new InvalidParameterException("Illegal type for promotion");
+            default: throw new ChessException("Chess parameter Exception: Illegal type for promotion!");
         }
         Position promotedPosition = promoted.getChessPosition().toPosition();
 
