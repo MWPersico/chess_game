@@ -37,10 +37,16 @@ public class UI {
         printCapturedPieces(capturedPieces);
         System.out.println();
         System.out.println("Turn: " + match.getTurn());
-        System.out.println("Waiting player: " + match.getCurrentPlayer());
-        if(match.getCheck()){
-            System.out.println("CHECK!!"); //  remove
+        
+        if(!match.getCheckMate()){
+            System.out.println("Waiting player: " + match.getCurrentPlayer());
+            if(match.getCheck()){
+                System.out.println("CHECK!!\n");
+            }
+        }else{
+            System.out.printf("\nCHECKMATE! %s player wins.\n", match.getCurrentPlayer());
         }
+        
     }
 
     public static ChessPosition readChessPosition(Scanner sc) {
